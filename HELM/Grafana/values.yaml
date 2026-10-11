@@ -1,0 +1,54 @@
+grafana:
+  tlsSecret:
+    create: false
+  namespaceOverride: grafana
+  adminUser: xxxxxxxxxxxxx
+  adminPassword: xxxxxxxxx
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          url: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          isDefault: true
+          uid: prom-local
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 472
+    fsGroup: 472
+  securityContext: {}
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    capabilities:
+      drop:
+        - ALL
+  initChownData:
+    enabled: false
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 472
+      capabilities:
+        drop:
+          - ALL
+        add: []
+  persistence:
+    enabled: true
+    size: 20Gi
+    storageClassName: xxxxxxxxxxxxxxxxxxx
+  service:
+    port: 80
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    path: /
+    pathType: Prefix
+    tls:
+      - secretName: grafana-tls-le
+        hosts:
+          - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

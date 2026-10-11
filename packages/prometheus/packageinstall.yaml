@@ -1,0 +1,24 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: prometheus
+  namespace: vmware-system-tkg
+  annotations:
+    packaging.carvel.dev/package-ClusterRole: prometheus-vmware-system-tkg-cluster-role
+    packaging.carvel.dev/package-ClusterRoleBinding: prometheus-vmware-system-tkg-cluster-rolebinding
+    packaging.carvel.dev/package-Secret: prometheus-vmware-system-tkg-values
+    packaging.carvel.dev/package-ServiceAccount: prometheus-vmware-system-tkg-sa
+    tkg.tanzu.vmware.com/tanzu-package-ClusterRole: prometheus-vmware-system-tkg-cluster-role
+    tkg.tanzu.vmware.com/tanzu-package-ClusterRoleBinding: prometheus-vmware-system-tkg-cluster-rolebinding
+    tkg.tanzu.vmware.com/tanzu-package-Secret: prometheus-vmware-system-tkg-values
+    tkg.tanzu.vmware.com/tanzu-package-ServiceAccount: prometheus-vmware-system-tkg-sa
+spec:
+  serviceAccountName: prometheus-vmware-system-tkg-sa
+  packageRef:
+    refName: prometheus.tanzu.vmware.com
+    versionSelection:
+      constraints: 2.55.1+vmware.2-tkg.1
+      prereleases: {}
+  values:
+    - secretRef:
+        name: prometheus-vmware-system-tkg-values
